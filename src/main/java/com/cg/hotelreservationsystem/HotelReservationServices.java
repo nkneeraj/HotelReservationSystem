@@ -9,9 +9,9 @@ public class HotelReservationServices {
 
 	public static ArrayList<Hotel> hotelList = new ArrayList<>();
 
-	public static void AddHotel(String hotelName, int regularCustomerRate) {
+	public static void AddHotel(String hotelName, int regularCustomerRate, int regCustomerWeekendRate) {
 
-		Hotel hotel = new Hotel(hotelName, regularCustomerRate);
+		Hotel hotel = new Hotel(hotelName, regularCustomerRate,regCustomerWeekendRate);
 		hotelList.add(hotel);
 	}
 
@@ -37,5 +37,13 @@ public class HotelReservationServices {
 
 	private long noOfDays(Date firstDate, Date secondDate) {
 		return Math.abs(firstDate.getTime() - secondDate.getTime()) / 86400000;
+	}
+
+	public void showHotelDetails() {
+		for(Hotel hotel: hotelList)
+		{
+			System.out.println(hotel);
+		}
+		
 	}
 }

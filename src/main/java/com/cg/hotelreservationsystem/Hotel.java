@@ -3,11 +3,13 @@ package com.cg.hotelreservationsystem;
 public class Hotel {
 	
 	private String hotelName;
-	private int regCustomerRate;
+	private int regCustomerWeekDayRate;
+	private int regCustomerWeekendDayRate;
 	
-	public Hotel(String hotelName, int regCustomerRate) {
+	public Hotel(String hotelName, int regCustomerRate, int regCustomerWeekendDayRate) {
 		this.hotelName = hotelName;
-		this.regCustomerRate = regCustomerRate;
+		this.regCustomerWeekDayRate = regCustomerRate;
+		this.regCustomerWeekendDayRate = regCustomerWeekendDayRate;
 	}
 
 	public String getHotelName() {
@@ -19,16 +21,24 @@ public class Hotel {
 	}
 
 	public int getRegCustomerRate() {
-		return regCustomerRate;
+		return regCustomerWeekDayRate;
 	}
 
 	public void setRegCustomerRate(int regCustomerRate) {
-		this.regCustomerRate = regCustomerRate;
+		this.regCustomerWeekDayRate = regCustomerRate;
 	}
 
+	public int getRegCustomerWeekendDayRate() {
+		return regCustomerWeekendDayRate;
+	}
+
+	public void setRegCustomerWeekendDayRate(int regCustomerWeekendDayRate) {
+		this.regCustomerWeekendDayRate = regCustomerWeekendDayRate;
+	}	
+	
 	@Override
 	public String toString() {
-		return "Hotel [hotelName=" + hotelName + ", regCustomerRate=" + regCustomerRate + "]";
+		return "Hotel [hotelName=" + hotelName + ", regCustomerWeekDayRate=" + regCustomerWeekDayRate
+				+ ", regCustomerWeekendDayRate=" + regCustomerWeekendDayRate + "]";
 	}
-	
 }
