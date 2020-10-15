@@ -13,7 +13,7 @@ public class HotelReservationServices {
 
 	public static void AddHotel(String hotelName, int regularCustomerRate, int regCustomerWeekendRate, int rating) {
 
-		Hotel hotel = new Hotel(hotelName, regularCustomerRate,regCustomerWeekendRate, rating);
+		Hotel hotel = new Hotel(hotelName, regularCustomerRate, regCustomerWeekendRate, rating);
 		hotelList.add(hotel);
 	}
 
@@ -36,53 +36,54 @@ public class HotelReservationServices {
 				hotelWithMinRate = hotel;
 			}
 		}
-		System.out.println("Cheapest " + hotelWithMinRate);
+//		List<String> hotelName = new ArrayList<>();
+//		hotelList.stream().filter(n -> {if((n.getRegCustomerRate()*weekDays+n.getRegCustomerWeekendDayRate()*weekendDays)==min) {return true;} 
+//		return false;}).forEach(n -> hotelName.add(n.getHotelName()));
+		for(Hotel hotel: hotelList)
+		{
+			if((hotel.getRegCustomerRate()*weekDays+hotel.getRegCustomerWeekendDayRate()*weekendDays)==min)
+			{
+				System.out.println("Cheapest Hotel: " +hotel.getHotelName());
+			}
+		}
+		System.out.println("Cheapest Rate " + min);
 		return hotelWithMinRate;
 	}
 
 	private long totalDays(Date firstDate, Date secondDate) {
 		return Math.abs(firstDate.getTime() - secondDate.getTime()) / 86400000;
 	}
-	
-	static long weekDays(Date start, Date end){
-	    //Ignore argument check
 
-	    Calendar c1 = GregorianCalendar.getInstance();
-	    c1.setTime(start);
-	    int w1 = c1.get(Calendar.DAY_OF_WEEK);
-	    c1.add(Calendar.DAY_OF_WEEK, -w1 + 1);
+	static long weekDays(Date start, Date end) {
+		// Ignore argument check
 
-	    Calendar c2 = GregorianCalendar.getInstance();
-	    c2.setTime(end);
-	    int w2 = c2.get(Calendar.DAY_OF_WEEK);
-	    c2.add(Calendar.DAY_OF_WEEK, -w2 + 1);
+		Calendar c1 = GregorianCalendar.getInstance();
+		c1.setTime(start);
+		int w1 = c1.get(Calendar.DAY_OF_WEEK);
+		c1.add(Calendar.DAY_OF_WEEK, -w1 + 1);
 
-	    //end Saturday to start Saturday 
-	    long days = (c2.getTimeInMillis()-c1.getTimeInMillis())/(1000*60*60*24);
-	    long daysWithoutSunday = days-(days*2/7);
+		Calendar c2 = GregorianCalendar.getInstance();
+		c2.setTime(end);
+		int w2 = c2.get(Calendar.DAY_OF_WEEK);
+		c2.add(Calendar.DAY_OF_WEEK, -w2 + 1);
 
-	    if (w1 == Calendar.SUNDAY) {
-	        w1 = Calendar.MONDAY;
-	    }
-	    if (w2 == Calendar.SUNDAY) {
-	        w2 = Calendar.MONDAY;
-	    }
-	    return daysWithoutSunday-w1+w2;
+		// end Saturday to start Saturday
+		long days = (c2.getTimeInMillis() - c1.getTimeInMillis()) / (1000 * 60 * 60 * 24);
+		long daysWithoutSunday = days - (days * 2 / 7);
+
+		if (w1 == Calendar.SUNDAY) {
+			w1 = Calendar.MONDAY;
+		}
+		if (w2 == Calendar.SUNDAY) {
+			w2 = Calendar.MONDAY;
+		}
+		return daysWithoutSunday - w1 + w2;
 	}
-//	public static int checkWeekDay(Date date)
-//	Calendar startDate = Calendar.getInstance();
-//	startDate.set(2012, Calendar.DECEMBER, 02);
-//	if (startDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-//	    System.out.println("true");
-//	} else {
-//	    System.out.println("FALSE");
-//	}
 
 	public void showHotelDetails() {
-		for(Hotel hotel: hotelList)
-		{
+		for (Hotel hotel : hotelList) {
 			System.out.println(hotel);
 		}
-		
+
 	}
 }
