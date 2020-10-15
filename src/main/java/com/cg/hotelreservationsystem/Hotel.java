@@ -25,4 +25,10 @@ public class Hotel {
 	public void setRegCustomerRate(int regCustomerRate) {
 		this.regCustomerRate = regCustomerRate;
 	}
+
+	@Override
+	public String toString() {
+		return "Hotel [hotelName=" + hotelName + ", regCustomerRate=" + regCustomerRate + "]";
+	}
+	
 }
