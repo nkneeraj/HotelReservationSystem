@@ -8,7 +8,7 @@ public class HotelReservation {
 	static int option = 0;
 	public static void main(String[] args) throws ParseException {	
 		
-		HotelReservationServices.AddHotel("RidgeWood", 220,90,5 );
+		HotelReservationServices.AddHotel("RidgeWood", 220,90, 5 );
 		HotelReservationServices.AddHotel("BridgeWood", 150,50,4);
 		HotelReservationServices.AddHotel("LakeWood" , 110,90,3);
 		HotelReservationServices hotelServices = new HotelReservationServices();
