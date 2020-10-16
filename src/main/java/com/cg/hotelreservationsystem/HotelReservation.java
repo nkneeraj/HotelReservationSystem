@@ -26,13 +26,6 @@ public class HotelReservation {
 				String secondDay = sc.nextLine();
 				hotelServices.findCheapestHotel(firstDay,secondDay);		
 			}
-			else if(option==3) {
-				System.out.println("Enter date one day before first day in 'yyyy-MM-dd'");
-				String firstDay = sc.nextLine();
-				System.out.println("Enter date on day before second day in 'yyyy-MM-dd'");
-				String secondDay = sc.nextLine();
-				hotelServices.findCheapestBestRatedHotel(firstDay, secondDay);
-			}
 			options();
 		}
 	}	
@@ -41,7 +34,6 @@ public class HotelReservation {
 		System.out.println("Enter options:");
 		System.out.println("Enter 1.Show Hotel details");
 		System.out.println("Enter 2.Find cheapest hotel.");
-		System.out.println("Enter 3.Find cheapest hotel with best rating");
 		System.out.println("10.Exit");
 		option = sc.nextInt();sc.nextLine();
 	}
