@@ -2,6 +2,7 @@ package com.cg.hotelreservationsystem;
 
 import java.text.ParseException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class HotelReservation {
 	private static Scanner sc = new Scanner(System.in);
@@ -42,13 +43,13 @@ public class HotelReservation {
 				String firstDay = sc.nextLine();
 				System.out.println("Enter date on day before second day in 'yyyy-MM-dd'");
 				String secondDay = sc.nextLine();
+//				regexValidation(firstDay,secondDay);
 				hotelServices.findCheapestBestRatedHotelForRewardCust(firstDay, secondDay);
 			}
-
 			options();
 		}
 	}
-
+	
 	public static void options() {
 		System.out.println("Enter options:");
 		System.out.println("Enter 1.Show Hotel details");
