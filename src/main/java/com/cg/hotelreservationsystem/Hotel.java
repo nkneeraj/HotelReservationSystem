@@ -1,16 +1,21 @@
 package com.cg.hotelreservationsystem;
 
 public class Hotel {
-	
+
 	private String hotelName;
 	private int regCustomerWeekDayRate;
 	private int regCustomerWeekendDayRate;
+	private int rewCustomerWeekDayRate;
+	private int rewCustomerWeekeendDayRate;
 	private int rating;
-	
-	public Hotel(String hotelName, int regCustomerRate, int regCustomerWeekendDayRate, int rating) {
+
+	public Hotel(String hotelName, int regCustomerRate, int regCustomerWeekendDayRate, int rewCustomerWeekDayRate,
+			int rewCustomerWeekendDayRate, int rating) {
 		this.hotelName = hotelName;
 		this.regCustomerWeekDayRate = regCustomerRate;
 		this.regCustomerWeekendDayRate = regCustomerWeekendDayRate;
+		this.rewCustomerWeekDayRate = rewCustomerWeekDayRate;
+		this.rewCustomerWeekeendDayRate = rewCustomerWeekendDayRate;
 		this.rating = rating;
 	}
 
@@ -44,8 +49,24 @@ public class Hotel {
 
 	public void setRegCustomerWeekendDayRate(int regCustomerWeekendDayRate) {
 		this.regCustomerWeekendDayRate = regCustomerWeekendDayRate;
-	}	
-	
+	}
+
+	public int getRewCustomerWeekDayRate() {
+		return rewCustomerWeekDayRate;
+	}
+
+	public void setRewCustomerWeekDayRate(int rewCustomerWeekDayRate) {
+		this.rewCustomerWeekDayRate = rewCustomerWeekDayRate;
+	}
+
+	public int getRewCustomerWeekeendDayRate() {
+		return rewCustomerWeekeendDayRate;
+	}
+
+	public void setRewCustomerWeekeendDayRate(int rewCustomerWeekeendDayRate) {
+		this.rewCustomerWeekeendDayRate = rewCustomerWeekeendDayRate;
+	}
+
 	@Override
 	public String toString() {
 		return "Hotel [hotelName=" + hotelName + ", regCustomerWeekDayRate=" + regCustomerWeekDayRate

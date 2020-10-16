@@ -9,9 +9,9 @@ public class HotelReservation {
 
 	public static void main(String[] args) throws ParseException {
 
-		HotelReservationServices.AddHotel("RidgeWood", 220, 150, 5);
-		HotelReservationServices.AddHotel("BridgeWood", 160, 60, 4);
-		HotelReservationServices.AddHotel("LakeWood", 110, 90, 3);
+		HotelReservationServices.AddHotel("RidgeWood", 220, 150, 100, 40, 5);
+		HotelReservationServices.AddHotel("BridgeWood", 160, 60, 110, 50, 4);
+		HotelReservationServices.AddHotel("LakeWood", 110, 90, 80, 80, 3);
 		HotelReservationServices hotelServices = new HotelReservationServices();
 
 		options();
