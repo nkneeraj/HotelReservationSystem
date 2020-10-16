@@ -47,9 +47,11 @@ public class HotelReservationServices {
 		return hotelWithMinRate;
 	}
 	
+	//UC12
 	public Hotel findCheapestBestRatedHotel(String firstDay, String secondDay) throws ParseException {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
 		Date firstDate = sdf.parse(firstDay);
 		Date secondDate = sdf.parse(secondDay);
 		long totalDays = totalDays(firstDate, secondDate)+1;
@@ -75,6 +77,11 @@ public class HotelReservationServices {
 				orElseThrow(NoSuchElementException::new);
 		System.out.println("Cheapest Hotel with best rating: "+ hotel.getHotelName());
 		return hotelWithMinRate;
+		}
+		catch(Exception x) {
+			System.out.println(x.getMessage());
+		}
+		return null;
 	}
 	
 	//UC7
@@ -97,7 +104,7 @@ public class HotelReservationServices {
 		return hotel;
 	}
 	
-	//UC10
+	//UC10 && UC11
 	public Hotel findCheapestBestRatedHotelForRewardCust(String firstDay, String secondDay) throws ParseException {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
