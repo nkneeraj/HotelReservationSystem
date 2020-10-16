@@ -4,8 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class HotelReservationServices {
 
@@ -23,8 +26,8 @@ public class HotelReservationServices {
 		Date firstDate = sdf.parse(firstDay);
 		Date secondDate = sdf.parse(secondDay);
 		long totalDays = totalDays(firstDate, secondDate)+1;
-		long weekDays = weekDays(firstDate, secondDate);
-		long weekendDays = totalDays-weekDays;
+		long weekendDays = weekendDate(firstDate, secondDate);
+		long weekDays = totalDays - weekendDays;
 		System.out.println("No of days: " + totalDays+ "\nWeek days: "+weekDays+"\nno of weekends: "+ weekendDays );
 		long min = Long.MAX_VALUE;
 		Hotel hotelWithMinRate = null;
@@ -36,17 +39,40 @@ public class HotelReservationServices {
 				hotelWithMinRate = hotel;
 			}
 		}
-//		List<String> hotelName = new ArrayList<>();
-//		hotelList.stream().filter(n -> {if((n.getRegCustomerRate()*weekDays+n.getRegCustomerWeekendDayRate()*weekendDays)==min) {return true;} 
-//		return false;}).forEach(n -> hotelName.add(n.getHotelName()));
-		for(Hotel hotel: hotelList)
-		{
-			if((hotel.getRegCustomerRate()*weekDays+hotel.getRegCustomerWeekendDayRate()*weekendDays)==min)
-			{
-				System.out.println("Cheapest Hotel: " +hotel.getHotelName());
+		long x = min;
+		List<Hotel> hotelName = new ArrayList<>();
+		hotelList.stream().filter(n -> {if((n.getRegCustomerRate()*weekDays+n.getRegCustomerWeekendDayRate()*weekendDays)==x) {return true;} 
+		return false;}).forEach(n -> hotelName.add(n));
+		return hotelWithMinRate;
+	}
+	
+	public Hotel findCheapestBestRatedHotel(String firstDay, String secondDay) throws ParseException {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date firstDate = sdf.parse(firstDay);
+		Date secondDate = sdf.parse(secondDay);
+		long totalDays = totalDays(firstDate, secondDate)+1;
+		long weekendDays = weekendDate(firstDate, secondDate);
+		long weekDays = totalDays - weekendDays;
+		System.out.println("No of days: " + totalDays+ "\nWeek days: "+weekDays+"\nno of weekends: "+ weekendDays );
+		long min = Long.MAX_VALUE;
+		Hotel hotelWithMinRate = null;
+		for (Hotel hotel : hotelList) {
+			long rate = hotel.getRegCustomerRate()*weekDays+hotel.getRegCustomerWeekendDayRate()*weekendDays;
+			System.out.println("Hotel Name: "+hotel.getHotelName()+ "Total rate: " + rate);
+			if (rate < min) {
+				min = rate;
+				hotelWithMinRate = hotel;
 			}
 		}
-		System.out.println("Cheapest Rate " + min);
+		long x = min;
+		List<Hotel> cheapestHotelList = new ArrayList<>();
+		hotelList.stream().filter(n -> {if((n.getRegCustomerRate()*weekDays+n.getRegCustomerWeekendDayRate()*weekendDays)==x) {return true;} 
+		return false;}).forEach(n -> cheapestHotelList.add(n));
+		
+		Hotel hotel = cheapestHotelList.stream().max(Comparator.comparing(Hotel::getRating)).
+				orElseThrow(NoSuchElementException::new);
+		System.out.println("Cheapest Hotel with best rating: "+ hotel.getHotelName());
 		return hotelWithMinRate;
 	}
 
@@ -54,36 +80,25 @@ public class HotelReservationServices {
 		return Math.abs(firstDate.getTime() - secondDate.getTime()) / 86400000;
 	}
 
-	static long weekDays(Date start, Date end) {
-		// Ignore argument check
-
-		Calendar c1 = GregorianCalendar.getInstance();
-		c1.setTime(start);
-		int w1 = c1.get(Calendar.DAY_OF_WEEK);
-		c1.add(Calendar.DAY_OF_WEEK, -w1 + 1);
-
-		Calendar c2 = GregorianCalendar.getInstance();
-		c2.setTime(end);
-		int w2 = c2.get(Calendar.DAY_OF_WEEK);
-		c2.add(Calendar.DAY_OF_WEEK, -w2 + 1);
-
-		// end Saturday to start Saturday
-		long days = (c2.getTimeInMillis() - c1.getTimeInMillis()) / (1000 * 60 * 60 * 24);
-		long daysWithoutSunday = days - (days * 2 / 7);
-
-		if (w1 == Calendar.SUNDAY) {
-			w1 = Calendar.MONDAY;
+	private long weekendDate(Date firstDate, Date secondDate) {
+		if(firstDate.after(secondDate)) {
+			Date temp = secondDate;
+			secondDate = firstDate;
+			firstDate = temp;
 		}
-		if (w2 == Calendar.SUNDAY) {
-			w2 = Calendar.MONDAY;
-		}
-		return daysWithoutSunday - w1 + w2;
+		long count =0;
+		while(firstDate.before(secondDate) || firstDate.equals(secondDate)) {
+			if(firstDate.getDay() == 0 || firstDate.getDay() == 6) {
+				count++;
+			}
+			firstDate  = new Date(firstDate.getTime() + 86400000);
+			}
+		return count;
 	}
 
 	public void showHotelDetails() {
 		for (Hotel hotel : hotelList) {
 			System.out.println(hotel);
 		}
-
 	}
 }
