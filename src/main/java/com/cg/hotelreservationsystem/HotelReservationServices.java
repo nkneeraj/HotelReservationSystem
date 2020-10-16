@@ -96,6 +96,43 @@ public class HotelReservationServices {
 		System.out.println("Hotel with best rating: "+ hotel.getHotelName()+ " Total rate: "+rate);
 		return hotel;
 	}
+	
+	//UC10
+	public Hotel findCheapestBestRatedHotelForRewardCust(String firstDay, String secondDay) throws ParseException {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+		Date firstDate = sdf.parse(firstDay);
+		Date secondDate = sdf.parse(secondDay);
+		long totalDays = totalDays(firstDate, secondDate)+1;
+		long weekendDays = weekendDate(firstDate, secondDate);
+		long weekDays = totalDays - weekendDays;
+		System.out.println("No of days: " + totalDays+ "\nWeek days: "+weekDays+"\nno of weekends: "+ weekendDays );
+		long min = Long.MAX_VALUE;
+		Hotel hotelWithMinRate = null;
+		for (Hotel hotel : hotelList) {
+			long rate = hotel.getRewCustomerWeekDayRate()*weekDays+hotel.getRewCustomerWeekeendDayRate()*weekendDays;
+			System.out.println("Hotel Name: "+hotel.getHotelName()+ "Total rate: " + rate);
+			if (rate < min) {
+				min = rate;
+				hotelWithMinRate = hotel;
+			}
+		}
+		long x = min;
+		List<Hotel> cheapestHotelList = new ArrayList<>();
+		hotelList.stream().filter(n -> {if((n.getRewCustomerWeekDayRate()*weekDays+n.getRewCustomerWeekeendDayRate()*weekendDays)==x) {return true;} 
+		return false;}).forEach(n -> cheapestHotelList.add(n));
+		
+		Hotel hotel = cheapestHotelList.stream().max(Comparator.comparing(Hotel::getRating)).
+				orElseThrow(NoSuchElementException::new);
+		System.out.println("Cheapest Hotel with best rating: "+ hotel.getHotelName());
+		return hotelWithMinRate;
+		}
+		catch(Exception x) {
+			System.out.println(x.getMessage());
+		}
+		return null;		
+	}
 
 	private long totalDays(Date firstDate, Date secondDate) {
 		return Math.abs(firstDate.getTime() - secondDate.getTime()) / 86400000;
